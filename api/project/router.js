@@ -1,20 +1,20 @@
-const router = require('express').Router()
-const Project = require('./model')
+const router = require("express").Router();
+const { validateProject } = require("../middleware/middleware");
+const Projects = require("./model");
 
-router.get('/', (req, res, next) => {
-    Project.project_id(req.params.project_id)
-    .then(res => {
-        res.status(200).json(res)
+router.get("/projects", (req, res, next) => {
+  Projects.get()
+    .then((project) => {
+      res.status(200).json(project);
     })
-    .catch(next)
-})
+    .catch(next);
+});
 
-router.use((err, req, res, next) => {
-    res.status(500).json({
-        custom: "ohhh",
-        message: err.message,
-        stack: err.stack,
+router.post("/projects", validateProject, (req, res, next) => {
+  Projects.create(req.body)
+    .then((newProject) => {
+      res.status(201).json(newProject);
     })
-})
-
-module.exports = router
+    .catch(next);
+});
+module.exports = router;

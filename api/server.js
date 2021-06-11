@@ -8,9 +8,9 @@ const server = express();
 
 server.use(express.json());
 
-server.use('/api/project', projectRouter);
-server.use('/api/router', resourceRouter);
-server.use('/api/task', taskRouter);
+server.use('/api/projects', projectRouter);
+server.use('/api/routers', resourceRouter);
+server.use('/api/tasks', taskRouter);
 
 server.use('*', (req, res, ) => {
     res.json({ api: 'up'})
